@@ -4,6 +4,13 @@
 #include "I2Cdev.h"
 #include "MPU6050.h"
 
+char AX[10];
+char AY[10];
+char AZ[10];
+char GX[10];
+char GY[10];
+char GZ[10];
+
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 MPU6050 accelgyro;
@@ -72,12 +79,12 @@ void setup(){
 void onConnectionEstablished()
 {
   // Publish nilai IMU
-  client.publish("MPU6050/ax", String(ax)); // Kirim nilai ax sebagai string di topik MPU6050/ax
-  client.publish("MPU6050/ay", String(ay)); // Kirim nilai ay sebagai string di topik MPU6050/ay
-  client.publish("MPU6050/ax", String(az)); // Kirim nilai az sebagai string di topik MPU6050/az
-  client.publish("MPU6050/gx", String(gx)); // Kirim nilai gx sebagai string di topik MPU6050/gx
-  client.publish("MPU6050/gy", String(gy)); // Kirim nilai gy sebagai string di topik MPU6050/gy
-  client.publish("MPU6050/gx", String(gz)); // Kirim nilai gz sebagai string di topik MPU6050/gz
+  client.publish("MPU6050/ax", AX); // Kirim nilai ax sebagai string di topik MPU6050/ax
+  client.publish("MPU6050/ay", AY); // Kirim nilai ay sebagai string di topik MPU6050/ay
+  client.publish("MPU6050/ax", AZ); // Kirim nilai az sebagai string di topik MPU6050/az
+  client.publish("MPU6050/gx", GX); // Kirim nilai gx sebagai string di topik MPU6050/gx
+  client.publish("MPU6050/gy", GY); // Kirim nilai gy sebagai string di topik MPU6050/gy
+  client.publish("MPU6050/gx", GZ); // Kirim nilai gz sebagai string di topik MPU6050/gz
 }
 
 void connect() {
@@ -100,7 +107,12 @@ void loop() {
   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //dapetin nilai gyro
   client.loop();                                      //communicate to MQTT broker
   
-
+  sprintf(AX, "%d", ax);
+  sprintf(AY, "%d", ay);
+  sprintf(AZ, "%d", az);
+  sprintf(GX, "%d", gx);
+  sprintf(GY, "%d", gy);
+  sprintf(GZ, "%d", gz);
   //Serial monitor nilai gyro
   
   #ifdef OUTPUT_READABLE_ACCELGYRO
