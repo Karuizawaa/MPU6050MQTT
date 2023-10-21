@@ -78,13 +78,7 @@ void setup(){
 }
 void onConnectionEstablished()
 {
-  // Publish nilai IMU
-  client.publish("MPU6050/ax", AX); // Kirim nilai ax sebagai string di topik MPU6050/ax
-  client.publish("MPU6050/ay", AY); // Kirim nilai ay sebagai string di topik MPU6050/ay
-  client.publish("MPU6050/ax", AZ); // Kirim nilai az sebagai string di topik MPU6050/az
-  client.publish("MPU6050/gx", GX); // Kirim nilai gx sebagai string di topik MPU6050/gx
-  client.publish("MPU6050/gy", GY); // Kirim nilai gy sebagai string di topik MPU6050/gy
-  client.publish("MPU6050/gx", GZ); // Kirim nilai gz sebagai string di topik MPU6050/gz
+
 }
 
 void connect() {
@@ -113,6 +107,13 @@ void loop() {
   sprintf(GX, "%d", gx);
   sprintf(GY, "%d", gy);
   sprintf(GZ, "%d", gz);
+  // Publish nilai IMU
+  client.publish("MPU6050/ax", AX); // Kirim nilai ax sebagai string di topik MPU6050/ax
+  client.publish("MPU6050/ay", AY); // Kirim nilai ay sebagai string di topik MPU6050/ay
+  client.publish("MPU6050/ax", AZ); // Kirim nilai az sebagai string di topik MPU6050/az
+  client.publish("MPU6050/gx", GX); // Kirim nilai gx sebagai string di topik MPU6050/gx
+  client.publish("MPU6050/gy", GY); // Kirim nilai gy sebagai string di topik MPU6050/gy
+  client.publish("MPU6050/gx", GZ); // Kirim nilai gz sebagai string di topik MPU6050/gz
   //Serial monitor nilai gyro
   
   #ifdef OUTPUT_READABLE_ACCELGYRO
