@@ -89,9 +89,9 @@ void loop() {
   }
   client.loop();
 
-  long now = millis();
-  if (now - lastMsg > 5000) {
-    lastMsg = now;
+//  long now = millis();
+//  if (now - lastMsg > 5000) {
+//    lastMsg = now;
 
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //dapetin nilai gyro
     
@@ -110,5 +110,5 @@ void loop() {
     Serial.print("gx : "); Serial.print(gx); Serial.print(" ");
     Serial.print("gy : "); Serial.print(gy); Serial.print(" ");
     Serial.print("gz : "); Serial.println(gz);
-  }
+//  }/
 }
