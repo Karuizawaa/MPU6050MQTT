@@ -18,7 +18,7 @@ bool blinkState = false;
 
 
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "WINWIN";
+const char* ssid = "Winwin";
 const char* password = "Second2019";
 
 // Add your MQTT Broker IP address, example:
@@ -55,15 +55,6 @@ void setup_wifi() {
 
 void setup() {
   Serial.begin(115200);
-  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-      Wire.begin();
-  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-      Fastwire::setup(400, true);
-  #endif
-  // initialize device
-  Serial.println("Initializing I2C devices...");
-  accelgyro.initialize();
-  
   setup_wifi();
   
   // verify connection
@@ -71,6 +62,7 @@ void setup() {
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   
   client.setServer(mqtt_server, 1883);
+//  client.setCallback(callback);
 }
 
 
@@ -79,7 +71,7 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("MPU6050" , "Winwin", "Windy23062002")) {
       Serial.println("connected");
     } else {
       Serial.print("failed, rc=");
@@ -97,9 +89,9 @@ void loop() {
   }
   client.loop();
 
-  long now = millis();
-  if (now - lastMsg > 5000) {
-    lastMsg = now;
+//  long now = millis();
+//  if (now - lastMsg > 5000) {
+//    lastMsg = now;
 
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //dapetin nilai gyro
     
@@ -118,5 +110,5 @@ void loop() {
     Serial.print("gx : "); Serial.print(gx); Serial.print(" ");
     Serial.print("gy : "); Serial.print(gy); Serial.print(" ");
     Serial.print("gz : "); Serial.println(gz);
-  }
+//  }/1
 }
