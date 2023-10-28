@@ -18,7 +18,7 @@ bool blinkState = false;
 
 
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Winwin";
+const char* ssid = "WINWIN";
 const char* password = "Second2019";
 
 // Add your MQTT Broker IP address, example:
