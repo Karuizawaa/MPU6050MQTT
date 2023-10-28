@@ -9,16 +9,9 @@
 #include "I2Cdev.h"
 #include "MPU6050.h"
 #define OUTPUT_READABLE_ACCELGYRO
-#define LED_PIN 13
-bool blinkState = false;
-
-#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-#include "Wire.h"
-#endif
-
 
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Winwin";
+const char* ssid = "WINWIN";
 const char* password = "Second2019";
 
 // Add your MQTT Broker IP address, example:
@@ -60,6 +53,14 @@ void setup() {
   // verify connection
   Serial.println("Testing device connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+      Wire.begin();
+  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
+      Fastwire::setup(400, true);
+  #endif
+  // initialize device
+  Serial.println("Initializing I2C devices...");
+  accelgyro.initialize();
   
   client.setServer(mqtt_server, 1883);
 //  client.setCallback(callback);
