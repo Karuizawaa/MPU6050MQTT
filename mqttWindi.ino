@@ -22,15 +22,8 @@ const char* ssid = "Winwin";
 const char* password = "Second2019";
 
 // Add your MQTT Broker IP address, example:
-//const char* mqtt_server = "192.168.1.144";
 const char* mqtt_server = "192.168.88.11";
 
-char AX[10];
-char AY[10];
-char AZ[10];
-char GX[10];
-char GY[10];
-char GZ[10];
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 MPU6050 accelgyro;
@@ -80,8 +73,6 @@ void reconnect() {
     // Attempt to connect
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");
-      // Subscribe
-      client.subscribe("esp32/output");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -104,32 +95,20 @@ void loop() {
 
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //dapetin nilai gyro
     
-    // Convert the value to a char array
-    sprintf(AX, "%d", ax);
-    sprintf(AY, "%d", ay);
-    sprintf(AZ, "%d", az);
-    sprintf(GX, "%d", gx);
-    sprintf(GY, "%d", gy);
-    sprintf(GZ, "%d", gz);
-    
     // Publish nilai IMU
-    client.beginPublish("MPU6050/ax", 7, 0);
-    client.write(ax);
-    client.endPublish();
-    client.beginPublish("MPU6050/ay", 7, 0);
-    client.write(ay);
-    client.endPublish();
-    client.beginPublish("MPU6050/az", 7, 0);
-    client.write(az);
-    client.endPublish();
-    client.beginPublish("MPU6050/gx", 7, 0);
-    client.write(gx);
-    client.endPublish();
-    client.beginPublish("MPU6050/gy", 7, 0);
-    client.write(gy);
-    client.endPublish();
-    client.beginPublish("MPU6050/gz", 7, 0);
-    client.write(gz);
-    client.endPublish();
+    client.publish("MPU/AX", String(ax).c_str(), true);
+    client.publish("MPU/AY", String(ay).c_str(), true);
+    client.publish("MPU/AZ", String(az).c_str(), true);
+    client.publish("MPU/GX", String(gx).c_str(), true);
+    client.publish("MPU/GY", String(gy).c_str(), true);
+    client.publish("MPU/GZ", String(gz).c_str(), true);
+
+    // Nampilin nilai IMU
+    Serial.print("ax : "); Serial.print(ax); Serial.print(" ");
+    Serial.print("ay : "); Serial.print(ay); Serial.print(" ");
+    Serial.print("az : "); Serial.print(az); Serial.print(" ");
+    Serial.print("gx : "); Serial.print(gx); Serial.print(" ");
+    Serial.print("gy : "); Serial.print(gy); Serial.print(" ");
+    Serial.print("gz : "); Serial.println(gz);
   }
 }
